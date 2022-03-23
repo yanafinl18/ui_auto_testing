@@ -10,7 +10,6 @@ class ProductPage(BasePage):
         book_name = self.should_be_book_name()
         self.add_product_to_basket()
         self.solve_quiz_and_get_code()
-        time.sleep(5)
         self.should_be_alert()
         book_name_in_basket = self.should_be_book_name_in_basket()
         # time.sleep(90)
@@ -30,3 +29,9 @@ class ProductPage(BasePage):
     def should_be_book_name_in_basket(self):
         book_in_basket = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
         return str(book_in_basket)
+
+    def should_not_be_success_message(self):
+        return self.is_not_element_present(*ProductPageLocators.PRODUCT_ADD_SUCCESS)
+
+    def should_success_message_disappeared(self):
+        return self.is_disappeared(*ProductPageLocators.PRODUCT_ADD_SUCCESS)
