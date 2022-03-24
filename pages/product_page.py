@@ -1,5 +1,3 @@
-import time
-
 from .base_page import BasePage
 from selenium.webdriver.common.by import By
 from .locators import ProductPageLocators
@@ -12,7 +10,6 @@ class ProductPage(BasePage):
         self.solve_quiz_and_get_code()
         self.should_be_alert()
         book_name_in_basket = self.should_be_book_name_in_basket()
-        # time.sleep(90)
         assert book_name == book_name_in_basket, "Не совпали имена книг в корзине и при заказе"
 
     def add_product_to_basket(self):

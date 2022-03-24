@@ -1,6 +1,37 @@
 from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
+from .pages.main_page import MainPage
 import pytest
+import time
+import random
+
+
+class TestUserAddToBasketFromProductPage():
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        link = "http://selenium1py.pythonanywhere.com"
+        page = MainPage(browser, link)
+        page.open()
+        page.go_to_login_page()
+        login_page = LoginPage(browser, browser.current_url)
+        login_page.should_be_login_page()
+        email = str(time.time()) + "@fakemail.org"
+        chars = list('+-/*!&$#?=w@<>abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890')
+        password = ''.join([random.choice(chars) for x in range(10)])
+        login_page.register_new_user(email, password)
+        login_page.success_registration_message()
+
+    def test_user_cant_see_success_message(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+        page = ProductPage(browser, link)
+        page.open()
+        assert page.should_not_be_success_message(), "Сообщение о добавлении в корзину появилось"
+
+    def test_user_can_add_product_to_basket(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1"
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_be_product_page()
 
 
 @pytest.mark.parametrize("promo_code", ["0", "1", "2", "3", "4", "5", "6",
