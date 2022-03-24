@@ -14,8 +14,8 @@ class BasketPage(BasePage):
 
     def should_be_basket_header(self):
         basket_header = self.browser.find_element(*BasketPageLocators.BASKET_HEADER).text
-        assert basket_header == "Корзина", "Header is incorrect"
+        assert basket_header in ["Корзина", "Basket"], "Header is incorrect"
 
     def should_be_empty_basket(self):
         basket = self.browser.find_element(*BasketPageLocators.EMPTY_BASKET).text
-        assert "Ваша корзина пуста" in basket, "Basket is not empty"
+        assert basket in ["Your basket is empty", "Ваша корзина пуста"], "Basket is not empty"
