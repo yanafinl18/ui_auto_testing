@@ -10,14 +10,14 @@ class ProductPage(BasePage):
         self.solve_quiz_and_get_code()
         self.should_be_alert()
         book_name_in_basket = self.should_be_book_name_in_basket()
-        assert book_name == book_name_in_basket, "Не совпали имена книг в корзине и при заказе"
+        assert book_name == book_name_in_basket, "Book name in the basket and in the order does not match"
 
     def add_product_to_basket(self):
         add_btn = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET)
         add_btn.click()
 
     def should_be_alert(self):
-        assert self.browser.find_element(*ProductPageLocators.PRODUCT_ADD_SUCCESS), "Товар не добавлен в корзину"
+        assert self.browser.find_element(*ProductPageLocators.PRODUCT_ADD_SUCCESS), "The product did not add in basket"
 
     def should_be_book_name(self):
         book = self.browser.find_element(*ProductPageLocators.BOOK_NAME).text
